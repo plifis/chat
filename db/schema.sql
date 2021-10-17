@@ -1,12 +1,12 @@
 create table roles(
                       id serial primary key,
-                      role varchar(50) not null unique
+                      role varchar(500) not null unique
 );
 create table persons(
                         id serial primary key,
-                        login varchar(200) not null unique,
-                        password varchar(50) not null,
-                        role_id int not null references roles(id)
+                        login varchar(500) not null unique,
+                        password varchar(500) not null,
+                        role_id int references roles(id)
 );
 create table rooms(
                       id serial primary key,
