@@ -12,15 +12,14 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String theme;
-    @OneToMany
-    private List<Message> messages;
+    @OneToMany (fetch = FetchType.LAZY)
+    private List<Message> messages = new ArrayList<>();
 
     public Room() {
     }
 
     public Room(String theme) {
         this.theme = theme;
-        this.messages = new ArrayList<>();
     }
 
     public int getId() {

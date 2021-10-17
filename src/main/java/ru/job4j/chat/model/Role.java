@@ -12,15 +12,14 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String role;
-    @OneToMany
-    private List<Person> person;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Person> person = new ArrayList<>();
 
     public Role() {
     }
 
     public Role(String role) {
         this.role = role;
-        this.person = new ArrayList<>();
     }
 
     public int getId() {

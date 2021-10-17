@@ -12,7 +12,7 @@ public class Person {
     private int id;
     private String login;
     private String password;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
     public Person() {

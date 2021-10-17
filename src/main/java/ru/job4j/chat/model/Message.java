@@ -1,5 +1,7 @@
 package ru.job4j.chat.model;
 
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Objects;
@@ -12,9 +14,9 @@ public class Message {
     private int id;
     private String text;
     private Calendar created;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Person author;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Room room;
 
     public Message() {
