@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import ru.job4j.chat.model.Message;
 import ru.job4j.chat.model.Room;
 import ru.job4j.chat.service.RoomService;
 
@@ -13,8 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/room")
 public class RoomController {
-    private static final String API = "http://localhost:8080/room/";
-    private static  final String API_ID = "http://localhost:8080/room/{id}";
     private final RoomService service;
 
     public RoomController(RoomService service) {

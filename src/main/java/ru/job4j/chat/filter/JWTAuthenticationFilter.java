@@ -29,9 +29,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public static final String SECRET = String.valueOf(System.currentTimeMillis());
     public static final long EXP_TIME = 864_000_000;
     public static final String HEADER_STRING = "Authorization";
-    public static final String SIGN_UP_URL = "/person/";
+    public static final String SIGN_UP_URL = "/person/register";
     public static final String TOKEN_PREFIX = "Bearer ";
-
 
     private AuthenticationManager auth;
 
