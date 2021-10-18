@@ -12,7 +12,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String theme;
-    @OneToMany (fetch = FetchType.LAZY)
+    @OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Message> messages = new ArrayList<>();
 
     public Room() {

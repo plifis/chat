@@ -15,6 +15,7 @@ public class RoleService {
     public RoleService(RoleRepository rep) {
         this.rep = rep;
     }
+
     public List<Role> getAllRoles() {
         List<Role> rsl = new ArrayList<>();
         this.rep.findAll().forEach(rsl::add);

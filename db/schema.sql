@@ -16,6 +16,6 @@ create table messages(
                          id serial primary key,
                          text varchar(5000) not null,
                          created timestamp without time zone not null default now(),
-                         person_id int not null references persons(id),
+                         person_id int references persons(id),
                          room_id int not null references rooms(id)
 );
