@@ -13,11 +13,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/room")
 public class RoomController {
-    @Autowired
-    private RestTemplate rest;
     private static final String API = "http://localhost:8080/room/";
     private static  final String API_ID = "http://localhost:8080/room/{id}";
-    private RoomService service;
+    private final RoomService service;
 
     public RoomController(RoomService service) {
         this.service = service;
