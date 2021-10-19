@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.Person;
 import ru.job4j.chat.model.Role;
 import ru.job4j.chat.service.PersonService;
@@ -32,14 +33,17 @@ public class PersonController {
     @GetMapping("/{id}")
     public ResponseEntity<Person> getPersonById(@PathVariable int id) {
         var rsl = this.service.getById(id);
-        return new ResponseEntity<>(
-                rsl.orElse(new Person()),
-                rsl.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND
-        );
+        if (rsl.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id not found");
+        }
+        return new ResponseEntity<>(rsl.get(), HttpStatus.OK);
     }
 
     @PostMapping("/register")
     public ResponseEntity<Person> create(@RequestBody Person person) {
+        if (person == null) {
+            throw new NullPointerException("Person can not empty");
+        }
         person.setPassword(encoder.encode(person.getPassword()));
         return new ResponseEntity<>(
         this.service.savePerson(person), HttpStatus.CREATED);
@@ -47,6 +51,9 @@ public class PersonController {
 
     @PutMapping("/")
     public ResponseEntity<Void> update(@RequestBody Person person) {
+        if (person == null) {
+            throw new NullPointerException("Person can not empty");
+        }
         this.service.savePerson(person);
         return ResponseEntity.ok().build();
     }

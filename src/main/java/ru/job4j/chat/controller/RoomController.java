@@ -1,11 +1,9 @@
 package ru.job4j.chat.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import ru.job4j.chat.model.Message;
+import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.Room;
 import ru.job4j.chat.service.RoomService;
 
@@ -28,14 +26,17 @@ public class RoomController {
     @GetMapping("/{id}")
     public ResponseEntity<Room> getRoomById(@PathVariable int id) {
         var rsl = this.service.findById(id);
-        return new ResponseEntity<>(
-                rsl.orElse(new Room()),
-                rsl.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND
-        );
+        if (rsl.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id not found");
+        }
+        return new ResponseEntity<>(rsl.get(), HttpStatus.OK);
     }
 
     @PostMapping("/")
     public ResponseEntity<Room> create(@RequestBody Room room) {
+        if (room == null) {
+            throw new NullPointerException("Room can not empty");
+        }
         return new ResponseEntity<>(
                 this.service.saveRoom(room), HttpStatus.CREATED
         );
@@ -43,6 +44,9 @@ public class RoomController {
 
     @PutMapping("/")
     public ResponseEntity<Void> update(@RequestBody Room room) {
+        if (room == null) {
+            throw new NullPointerException("Room can not empty");
+        }
         this.service.saveRoom(room);
         return ResponseEntity.ok().build();
     }
