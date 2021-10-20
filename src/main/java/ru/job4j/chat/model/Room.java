@@ -12,7 +12,7 @@ import java.util.*;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(groups = {Operations.OnUpdate.class, Operations.OnDelete.class, Operations.OnPatch.class})
+    @NotNull(groups = {Operations.OnUpdate.class, Operations.OnPatch.class})
     private int id;
     @NotBlank(message = "Theme must not be empty.")
     private String theme;

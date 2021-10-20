@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class PersonDTO {
-    @NotNull(groups = {Operations.OnUpdate.class, Operations.OnDelete.class, Operations.OnPatch.class})
+    @NotNull(groups = {Operations.OnUpdate.class, Operations.OnPatch.class})
     private int id;
     @NotBlank(message = "Login must not be empty.")
     private String login;

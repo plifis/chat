@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class RoomDTO {
-    @NotNull(groups = {Operations.OnUpdate.class, Operations.OnDelete.class, Operations.OnPatch.class})
+    @NotNull(groups = {Operations.OnUpdate.class, Operations.OnPatch.class})
     private int id;
     @NotBlank(message = "Login must not be empty.")
     private String theme;
