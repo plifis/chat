@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.Message;
+import ru.job4j.chat.model.MessageDTO;
+import ru.job4j.chat.model.Room;
 import ru.job4j.chat.service.MessageService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +21,7 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/message")
 public class MessageController {
+    RestTemplate rest = new RestTemplate();
     private MessageService service;
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class.getSimpleName());
     private final ObjectMapper mapper;
@@ -48,6 +52,19 @@ public class MessageController {
         if (message.getText().length() < 1) {
             throw new IllegalArgumentException("Text must be contain 1 or more symbols");
         }
+        this.service.saveMessage(message);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/")
+    public ResponseEntity<Void> patch(@RequestBody MessageDTO dto) {
+        if (dto == null) {
+            throw new NullPointerException("Message can not empty");
+        }
+        var message = this.service.getById(dto.getId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        message.setText(dto.getText());
+        message.setRoom(rest.getForObject("/room/{id}", Room.class, dto.getIdRoom()));
         this.service.saveMessage(message);
         return ResponseEntity.ok().build();
     }

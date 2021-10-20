@@ -1,9 +1,7 @@
 package ru.job4j.chat.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "roles")
@@ -13,7 +11,7 @@ public class Role {
     private int id;
     private String role;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
-    private List<Person> person = new ArrayList<>();
+    private Set<Person> person = new HashSet<>();
 
     public Role() {
     }
@@ -38,11 +36,11 @@ public class Role {
         this.role = role;
     }
 
-    public List<Person> getPerson() {
+    public Set<Person> getPerson() {
         return person;
     }
 
-    public void setPerson(List<Person> person) {
+    public void setPerson(Set<Person> person) {
         this.person = person;
     }
 

@@ -5,8 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.Role;
+import ru.job4j.chat.model.RoleDTO;
 import ru.job4j.chat.service.RoleService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RestController
@@ -47,6 +49,15 @@ public class RoleController {
             throw new NullPointerException("Person can not empty");
         }
         this.service.saveRole(role);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/")
+    public ResponseEntity<Void> patch(@RequestBody RoleDTO dto) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        if (dto == null) {
+            throw new NullPointerException("Person can not empty");
+        }
+        this.service.patchRole(dto);
         return ResponseEntity.ok().build();
     }
 

@@ -6,8 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.Room;
+import ru.job4j.chat.model.RoomDTO;
 import ru.job4j.chat.service.RoomService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RestController
@@ -52,6 +54,15 @@ public class RoomController {
         if (room == null) {
             throw new NullPointerException("Room can not empty");
         }
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/")
+    public ResponseEntity<Void> patch(@RequestBody RoomDTO dto) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        if (dto == null) {
+            throw new NullPointerException("Room can not empty");
+        }
+        this.service.patch(dto);
         return ResponseEntity.ok().build();
     }
 

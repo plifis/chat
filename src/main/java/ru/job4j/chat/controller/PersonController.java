@@ -7,10 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
-import ru.job4j.chat.model.Person;
-import ru.job4j.chat.model.Role;
+import ru.job4j.chat.model.*;
 import ru.job4j.chat.service.PersonService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RestController
@@ -58,6 +58,15 @@ public class PersonController {
         return ResponseEntity.ok().build();
     }
 
+    @PatchMapping("/")
+    public ResponseEntity<Void> patch(@RequestBody PersonDTO dto) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        if (dto == null) {
+            throw new NullPointerException("Person can not empty");
+        }
+            this.service.patchPerson(dto);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         Person person = new Person();
@@ -65,6 +74,4 @@ public class PersonController {
         this.service.deletePerson(person);
         return ResponseEntity.ok().build();
     }
-
-
 }
