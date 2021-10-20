@@ -1,6 +1,7 @@
 package ru.job4j.chat.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,7 +30,11 @@ public class RoomController {
         if (rsl.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id not found");
         }
-        return new ResponseEntity<>(rsl.get(), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("RoomHeader", "Room " + rsl.get().getTheme())
+                .contentType(MediaType.APPLICATION_JSON)
+                .contentLength(rsl.get().toString().length())
+                .body(rsl.get());
     }
 
     @PostMapping("/")
@@ -47,16 +52,16 @@ public class RoomController {
         if (room == null) {
             throw new NullPointerException("Room can not empty");
         }
-        this.service.saveRoom(room);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable int id) {
+    public ResponseEntity<String> delete(@PathVariable int id) {
         Room room = new Room();
         room.setId(id);
         this.service.deleteRoom(room);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Room delete with id = " + id);
     }
 
 
