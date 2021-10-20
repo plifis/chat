@@ -1,10 +1,16 @@
 package ru.job4j.chat.model;
 
+import ru.job4j.chat.controller.Operations;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.Objects;
 
 public class MessageDTO {
+    @NotNull(groups = {Operations.OnUpdate.class, Operations.OnDelete.class, Operations.OnPatch.class})
     private int id;
+    @NotBlank(message = "Text must not be empty.")
     private String text;
     private Calendar created;
     private int idRoom;

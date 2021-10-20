@@ -4,12 +4,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.*;
 import ru.job4j.chat.service.PersonService;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class PersonController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Person> create(@RequestBody Person person) {
+    public ResponseEntity<Person> create(@Valid @RequestBody Person person) {
         if (person == null) {
             throw new NullPointerException("Person can not empty");
         }
@@ -50,6 +52,7 @@ public class PersonController {
     }
 
     @PutMapping("/")
+    @Validated({Operations.OnUpdate.class})
     public ResponseEntity<Void> update(@RequestBody Person person) {
         if (person == null) {
             throw new NullPointerException("Person can not empty");
@@ -59,6 +62,7 @@ public class PersonController {
     }
 
     @PatchMapping("/")
+    @Validated({Operations.OnPatch.class})
     public ResponseEntity<Void> patch(@RequestBody PersonDTO dto) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         if (dto == null) {
             throw new NullPointerException("Person can not empty");

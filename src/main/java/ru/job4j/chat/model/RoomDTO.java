@@ -1,11 +1,17 @@
 package ru.job4j.chat.model;
 
+import ru.job4j.chat.controller.Operations;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 public class RoomDTO {
+    @NotNull(groups = {Operations.OnUpdate.class, Operations.OnDelete.class, Operations.OnPatch.class})
     private int id;
+    @NotBlank(message = "Login must not be empty.")
     private String theme;
     private Set<Message> messages = new HashSet<>();
 

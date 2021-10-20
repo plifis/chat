@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,6 +16,7 @@ import ru.job4j.chat.service.MessageService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -32,7 +34,7 @@ public class MessageController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Message> create(@RequestBody Message message) {
+    public ResponseEntity<Message> create(@Valid @RequestBody Message message) {
         if (message == null) {
             throw new NullPointerException("Message can not empty");
         }
@@ -45,6 +47,7 @@ public class MessageController {
     }
 
     @PutMapping("/")
+    @Validated(Operations.OnUpdate.class)
     public ResponseEntity<Void> update(@RequestBody Message message) {
         if (message == null) {
             throw new NullPointerException("Message can not empty");
@@ -57,6 +60,7 @@ public class MessageController {
     }
 
     @PatchMapping("/")
+    @Validated(Operations.OnPatch.class)
     public ResponseEntity<Void> patch(@RequestBody MessageDTO dto) {
         if (dto == null) {
             throw new NullPointerException("Message can not empty");

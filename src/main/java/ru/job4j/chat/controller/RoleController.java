@@ -2,12 +2,14 @@ package ru.job4j.chat.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.Role;
 import ru.job4j.chat.model.RoleDTO;
 import ru.job4j.chat.service.RoleService;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class RoleController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Role> create(@RequestBody Role role) {
+    public ResponseEntity<Role> create(@Valid @RequestBody Role role) {
         if (role == null) {
             throw new NullPointerException("Person can not empty");
         }
@@ -44,6 +46,7 @@ public class RoleController {
     }
 
     @PutMapping("/")
+    @Validated({Operations.OnUpdate.class})
     public ResponseEntity<Void> update(@RequestBody Role role) {
         if (role == null) {
             throw new NullPointerException("Person can not empty");
@@ -53,6 +56,7 @@ public class RoleController {
     }
 
     @PatchMapping("/")
+    @Validated({Operations.OnPatch.class})
     public ResponseEntity<Void> patch(@RequestBody RoleDTO dto) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         if (dto == null) {
             throw new NullPointerException("Person can not empty");

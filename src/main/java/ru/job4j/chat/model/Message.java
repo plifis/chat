@@ -1,8 +1,10 @@
 package ru.job4j.chat.model;
 
-import org.hibernate.annotations.Fetch;
+import ru.job4j.chat.controller.Operations;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -11,7 +13,9 @@ import java.util.Objects;
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = {Operations.OnUpdate.class, Operations.OnDelete.class, Operations.OnPatch.class})
     private int id;
+    @NotBlank(message = "Text must not be empty.")
     private String text;
     private Calendar created;
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})

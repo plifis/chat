@@ -3,12 +3,14 @@ package ru.job4j.chat.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.chat.model.Room;
 import ru.job4j.chat.model.RoomDTO;
 import ru.job4j.chat.service.RoomService;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class RoomController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Room> create(@RequestBody Room room) {
+    public ResponseEntity<Room> create(@Valid @RequestBody Room room) {
         if (room == null) {
             throw new NullPointerException("Room can not empty");
         }
@@ -50,6 +52,7 @@ public class RoomController {
     }
 
     @PutMapping("/")
+    @Validated({Operations.OnUpdate.class})
     public ResponseEntity<Void> update(@RequestBody Room room) {
         if (room == null) {
             throw new NullPointerException("Room can not empty");
@@ -58,6 +61,7 @@ public class RoomController {
     }
 
     @PatchMapping("/")
+    @Validated({Operations.OnPatch.class})
     public ResponseEntity<Void> patch(@RequestBody RoomDTO dto) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         if (dto == null) {
             throw new NullPointerException("Room can not empty");
