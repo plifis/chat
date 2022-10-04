@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "persons")
-public class Person {
+public class    Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(groups = {Operations.OnUpdate.class, Operations.OnPatch.class})

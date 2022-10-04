@@ -14,8 +14,8 @@
     <name>chat</name>
     <description>Chat</description>
     <properties>
-        <java.version>1.8</java.version>
-    </properties>
+    <java.version>14</java.version>
+</properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
