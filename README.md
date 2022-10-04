@@ -1,4 +1,12 @@
-# chat
-Проект Чата в соответсвии со стандартом REST
+## Проект Чата 
+### Проект построен в соответствии со стандартом REST
 
-[![Build Status](https://app.travis-ci.com/plifis/chat.svg?branch=main)](https://app.travis-ci.com/plifis/chat)
+Основные функциональные возможности:
+- Валидация данных в слое "Сервиса";
+- Авторизация с использванием JWT;
+- Доступ только зарегистрированным пользователям;
+- Регистрация пользователей;
+- Пользователи могут создавать, обновлять, удалять сообщения в разных комнатах.
+
+
+[![Build Status](https://app.travis-ci.com/plifis/chat.svg?branch=master)](https://app.travis-ci.com/plifis/chat)
